@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en"><!-- Basic -->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">   
+
+<!-- Mobile Metas -->
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<!-- Site Metas -->
+<title>Health Lab</title>  
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Site Icons -->
+<link rel="shortcut icon" href="{% static 'hp/images/favicon.ico' %}" type="image/x-icon">
+<link rel="apple-touch-icon" href="{% static 'hp/images/apple-touch-icon.png' %}">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="{% static 'hp/css/bootstrap.min.css' %}">
+<!-- Pogo Slider CSS -->
+<link rel="stylesheet" href="{% static 'hp/css/pogo-slider.min.css' %}">
+<!-- Site CSS -->
+<link rel="stylesheet" href="{% static 'hp/css/style.css' %}">    
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="{% static 'hp/css/responsive.css' %}">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'hp/css/custom.css' %}">
+
+<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style>
+	.dropbtn {
+		background-color: #89e7e7;
+		color: rgb(128, 143, 145);
+		padding: 16px;
+		font-size: 16px;
+		border: none;
+		cursor: pointer;
+	}
+
+	.dropdown {
+		position: relative;
+		display: inline-block;
+	}
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #7aa5a7;
+		min-width: 160px;
+		box-shadow: 0px 8px 16px 0px rgba(95, 206, 200, 0.897);
+		z-index: 1;
+	}
+
+	.dropdown-content a {
+		color: black;
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+	}
+
+	.dropdown-content a:hover {
+
+		background-color: #94c0ce
+	}
+
+	 .dropdown:hover .dropdown-content {
+  		display: block;
+	}
+
+	.dropdown:hover .dropbtn {
+ 	 	background-color: rgb(171, 189, 240);
+	} 
+
+	.abcd{
+		height: 500%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+  	}
+</style>
+
+</head>
+<body id="top">
+	<!-- Start Banner -->
+
+<div class="abcd" style="background-image:url({% static 'hp/images/medical-care.jpg' %});">
+	<div class="dropdown">
+		<button class="dropbtn">Departments</button>
+		<div class="dropdown-content">
+			<a href="/">All</a>
+		{% for i in ct %}
+			<a href={{i.get_url}}>{{i.name}}</a>
+		{% endfor %}
+		</div>
+	</div>
+    	<div id="pageintro" class="hoc clear">
+	 		<article>
+				<h4 class="text-center">WELCOME TO HEALTH LAB</h4>
+				<p class="text-center">We are Expert in The Field of Health Lab</p>
+			</article>
+	  	</div>
+</div>
+	<!-- End Banner -->
+
+	<!-- Start Team -->
+
+	<div id="team" class="team-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="title-box">
+						<h2>Our Doctor</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				{% for i in pg.object_list %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="our-team">
+                            <a href={{i.get_url}}><img src="{{i.img.url}}" alt="" style="height: 300px;width: 400px;"></a><br>
+                        <div class="team-content">
+                            <h3 class="title">{{i.name}}</h3>
+                            <p>{{i.desc|truncatewords:17}}</p>
+                        </div>
+                    </div>
+        		</div>
+				{% endfor %}
+			</div>
+			
+		</div>
+	</div>
+	<center>
+		{% for p in pg.paginator.page_range %}
+		<a href="?page={{p}}" class="btn btn-light btn-sm {% if pg.number == p %} active {% endif %}">{{p}}</a>
+		{% endfor %}
+	</center>
+	<!-- End Team -->
+
+	<!-- Start Appointment -->
+<div id="appointment" class="appointment-main">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="title-box">
+					<h2>Appointment</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+				</div>
+			</div>
+		</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="well-block">
+                        <div class="well-title">
+                            <h2>Book an Appointment</h2>
+                        </div>
+                        <form action="{% url 'appointment' %}" method="post">
+							{% csrf_token %}
+                            <!-- Form start -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">Name</label>
+                                        <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="email">Email</label>
+                                        <input id="email" name="email" type="text" placeholder="E-Mail" class="form-control input-md">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="date">Preferred Date</label>
+                                        <input id="date" name="date" type="text" placeholder="Preferred Date" class="form-control input-md">
+                                    </div>
+                                </div>
+                                <!-- Select Basic -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="time">Preferred Time</label>
+                                        <select id="time" name="time" class="form-control">
+                                            <option value="8:00 to 9:00">8:00 to 9:00</option>
+                                            <option value="9:00 to 10:00">9:00 to 10:00</option>
+                                            <option value="10:00 to 1:00">10:00 to 1:00</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Select Basic -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label" for="appointmentfor">Department</label>
+                                        <select id="appointmentfor" name="appointmentfor" class="form-control">
+                                            <option value="Choose Department">Choose Department</option>
+											<option value="Gynacology">Gynacology</option>
+											<option value="Dermatologist">Dermatologist</option>
+											<option value="Orthology">Orthology</option>
+											<option value="Anesthesiology">Anesthesiology</option>
+											<option value="Hematologists"> Hematologists</option>
+											<option value="Cardiology"> Cardiology</option>
+											<option value="Endocrinologists"> Endocrinologists</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Button -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button id="singlebutton" name="singlebutton" class="new-btn-d br-2">Make An Appointment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- form end -->
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Appointment -->
+	
+	<!-- Start Footer -->
+	<footer class="footer-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<p class="footer-company-name">All Rights Reserved. &copy; 2018 <a href="#">Health Lab</a></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- End Footer -->
+	
+	<a href="#" id="scroll-to-top" class="new-btn-d br-2"><i class="fa fa-angle-up"></i></a>
+
+	<!-- ALL JS FILES -->
+	<script src="{% static 'hp/js/jquery.min.js' %}"></script>
+	<script src="{% static 'hp/js/popper.min.js' %}"></script>
+	<script src="{% static 'hp/js/bootstrap.min.js' %}"></script>
+    <!-- ALL PLUGINS -->
+	<script src="{% static 'hp/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'hp/js/jquery.pogo-slider.min.js' %}"></script> 
+	<script src="{% static 'hp/js/slider-index.js' %}"></script>
+	<script src="{% static 'hp/js/smoothscroll.js' %}"></script>
+	<script src="{% static 'hp/js/TweenMax.min.js' %}"></script>
+	<script src="{% static 'hp/js/main.js' %}"></script>
+	<script src="{% static 'hp/js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'hp/js/form-validator.min.js' %}"></script>
+    <script src="{% static 'hp/js/contact-form-script.js' %}"></script>
+	<script src="{% static 'hp/js/isotope.min.js' %}"></script>	
+	<script src="{% static 'hp/js/images-loded.min.js' %}"></script>	
+    <script src="{% static 'hp/js/custom.js' %}"></script>
+</body>
+</html>
+{% endblock %}
